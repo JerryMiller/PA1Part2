@@ -1,0 +1,39 @@
+IsDone method needs to be different - why?
+
+What should be in the Run() methods? Is it the code that we already had? When do we call Run();
+
+When do we check for interrupted and what is the if statement for it?
+
+What are we sending and receiving exactly? - The input and output
+
+Do the individual filters implement Runnable or just the concurrentFilter class?
+
+How does the process method and the run method interact? Why do you have to keep processing the next one if they all occur at the same time? Isn't that where Join should be?
+
+How does Join method work? Do you have to start each thread and then join each thread? Is that instead of the process?
+
+
+
+Call start for each of the threads and then call join for the last one - only join on the last one, not start!
+
+Run should be in each filter and calling process 
+
+isDone method should take the status of the thread so that the next one doesn't go to sleep
+
+The last one must not finish until the rest are absoulutely done 
+
+Each thread cannot terminate before the previous one is terminated - Aside from the first one
+
+Each thread is done when the previous one is done AND the input thread is empty
+
+change input and output queue to blockedqueue
+
+Change REPL to start instead of process 
+
+in process method for each one you check for isDone()
+
+
+Dont ever return isDone
+
+
+
