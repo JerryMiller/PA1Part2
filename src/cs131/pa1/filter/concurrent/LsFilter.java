@@ -1,5 +1,6 @@
 package cs131.pa1.filter.concurrent;
 import java.io.File;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class LsFilter extends ConcurrentFilter{
 	int counter;
@@ -29,12 +30,11 @@ public class LsFilter extends ConcurrentFilter{
 
 	@Override
 	public void run() {
-
 		process();
-		done=true;
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
-	public boolean isDone() {
-		return true;
-	}
+	
 }

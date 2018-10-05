@@ -1,5 +1,7 @@
 package cs131.pa1.filter.concurrent;
 
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class PwdFilter extends ConcurrentFilter {
 	public PwdFilter() {
 		super();
@@ -17,11 +19,9 @@ public class PwdFilter extends ConcurrentFilter {
 	@Override
 	public void run() {
 		process();
-		done=true;
-		
-	}
-	public boolean isDone() {
-		return true;
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
 }

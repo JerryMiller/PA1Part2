@@ -1,5 +1,7 @@
 package cs131.pa1.filter.concurrent;
 
+import java.util.concurrent.LinkedBlockingQueue;
+
 import cs131.pa1.filter.Message;
 
 public class GrepFilter extends ConcurrentFilter {
@@ -23,11 +25,38 @@ public class GrepFilter extends ConcurrentFilter {
 			return null;
 		}
 	}
+	
+	public void process(){
+		done = input.poll();
+		System.out.println("in process");
+		while (!isDone()){
+			System.out.println("In the loop");
+			try {
+				done = input.take();
+				System.out.println("In the 2nd loop");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(isDone()) {
+				break;
+			}
+			
+			String processedLine = processLine(done);
+			if (processedLine != null){
+				System.out.println("In the 3rd if loop");
+				output.add(processedLine);
+			}
+		}
+	}
 
 	@Override
 	public void run() {
 		process();
-		done=true;
+		done=input.poll();
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
 

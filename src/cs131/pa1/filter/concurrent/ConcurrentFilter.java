@@ -10,7 +10,7 @@ public abstract class ConcurrentFilter extends Filter implements Runnable {
 	
 	protected LinkedBlockingQueue<String> input;
 	protected LinkedBlockingQueue<String> output;
-	public boolean done;
+	public String done="";
 	
 	@Override
 	public void setPrevFilter(Filter prevFilter) {
@@ -37,36 +37,41 @@ public abstract class ConcurrentFilter extends Filter implements Runnable {
 	}
 	
 	public void process(){
-		while (!input.isEmpty()){
+		while (!isDone()){
+			System.out.println("In the loop");
+			try {
+				done = input.take();
+				System.out.println("In the 2nd loop");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(isDone()) {
+				break;
+			}
 			
-			String line = input.poll();
-			String processedLine = processLine(line);
+			String processedLine = processLine(done);
 			if (processedLine != null){
+				System.out.println("In the 3rd if loop");
 				output.add(processedLine);
-		}
-		}
-		while(!isDone()) {
-		
+			}
 		}
 	}
 	
 	
 	@Override
 	public boolean isDone() {
-		if(prev.done==true) {
+		if(done.equals("XXXYYYZZZPOISINPILL")) {
 			return true;
 		}
 		return false;
-		
-//		if(prev==null || Thread.currentThread().getState().equals(Thread.State.TERMINATED)) {
-//			return true;
-//		}
-//		return false;
-		
 	}
+	
 	public void run() {
 		process();
-		done = true;
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 	}
 	protected abstract String processLine(String line);
 	

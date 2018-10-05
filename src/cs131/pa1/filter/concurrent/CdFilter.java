@@ -1,6 +1,7 @@
 package cs131.pa1.filter.concurrent;
 
 import java.io.File;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import cs131.pa1.filter.Filter;
 import cs131.pa1.filter.Message;
@@ -46,7 +47,9 @@ public class CdFilter extends ConcurrentFilter {
 	@Override
 	public void run() {
 		process();
-		done=true;
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
 }

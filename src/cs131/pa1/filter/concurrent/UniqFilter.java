@@ -1,6 +1,7 @@
 package cs131.pa1.filter.concurrent;
 
 import java.util.HashSet;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class UniqFilter extends ConcurrentFilter{
 	private HashSet<String> existingStringSet;
@@ -24,7 +25,9 @@ public class UniqFilter extends ConcurrentFilter{
 	@Override
 	public void run() {
 		process();
-		done=true;
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
 }

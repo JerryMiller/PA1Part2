@@ -1,5 +1,7 @@
 package cs131.pa1.filter.concurrent;
 
+import java.util.concurrent.LinkedBlockingQueue;
+
 public class WcFilter extends ConcurrentFilter {
 	private int linecount;
 	private int wordcount;
@@ -10,10 +12,12 @@ public class WcFilter extends ConcurrentFilter {
 	}
 	
 	public void process() {
+		
 		if(isDone()) {
 			output.add(processLine(null));
 		} else {
 			super.process();
+			output.add(linecount + " " + wordcount + " " + charcount);
 		}
 		
 	}
@@ -45,7 +49,9 @@ public class WcFilter extends ConcurrentFilter {
 		System.out.println("IN WC");
 		process();
 		System.out.println("out of WC");
-		done=true;
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
 }

@@ -3,6 +3,7 @@ package cs131.pa1.filter.concurrent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import cs131.pa1.filter.Filter;
 import cs131.pa1.filter.Message;
@@ -32,7 +33,13 @@ public class RedirectFilter extends ConcurrentFilter {
 	
 	public void process() {
 		while(!isDone() && !input.isEmpty()) {
-			processLine(input.poll());
+			try {
+				done =input.take();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			processLine(done);
 		}
 	}
 	
@@ -53,7 +60,9 @@ public class RedirectFilter extends ConcurrentFilter {
 	public void run() {
 		System.out.println("red");
 		process();
-		done = true;
+		if(output==null)
+			output=new LinkedBlockingQueue<String>();
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
 }

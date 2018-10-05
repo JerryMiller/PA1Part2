@@ -57,7 +57,7 @@ public class CatFilter extends ConcurrentFilter{
 	@Override
 	public void run() {
 		process();
-		done=true;
+		output.add("XXXYYYZZZPOISINPILL");
 		
 	}
 
