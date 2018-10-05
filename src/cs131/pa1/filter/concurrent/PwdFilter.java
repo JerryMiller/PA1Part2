@@ -17,6 +17,11 @@ public class PwdFilter extends ConcurrentFilter {
 	@Override
 	public void run() {
 		process();
+		done=true;
+		
+	}
+	public boolean isDone() {
+		return true;
 		
 	}
 }

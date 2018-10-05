@@ -16,18 +16,25 @@ public class LsFilter extends ConcurrentFilter{
 	@Override
 	public void process() {
 		while(counter < flist.length) {
+
 			output.add(processLine(""));
 		}
 	}
 	
 	@Override
 	public String processLine(String line) {
+
 		return flist[counter++].getName();
 	}
 
 	@Override
 	public void run() {
+
 		process();
+		done=true;
 		
+	}
+	public boolean isDone() {
+		return true;
 	}
 }

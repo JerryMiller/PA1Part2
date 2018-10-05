@@ -31,7 +31,7 @@ public class RedirectFilter extends ConcurrentFilter {
 	}
 	
 	public void process() {
-		while(!isDone()) {
+		while(!isDone() && !input.isEmpty()) {
 			processLine(input.poll());
 		}
 	}
@@ -51,7 +51,9 @@ public class RedirectFilter extends ConcurrentFilter {
 
 	@Override
 	public void run() {
+		System.out.println("red");
 		process();
+		done = true;
 		
 	}
 }

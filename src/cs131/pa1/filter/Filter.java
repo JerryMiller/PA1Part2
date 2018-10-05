@@ -5,6 +5,7 @@ public abstract class Filter implements Runnable {
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	protected Filter next;
 	protected Filter prev;
+	public boolean done;
 	
 	public abstract void setNextFilter(Filter next);
 	

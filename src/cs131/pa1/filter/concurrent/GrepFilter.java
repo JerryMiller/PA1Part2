@@ -27,6 +27,7 @@ public class GrepFilter extends ConcurrentFilter {
 	@Override
 	public void run() {
 		process();
+		done=true;
 		
 	}
 

@@ -6,9 +6,15 @@ public class PrintFilter extends ConcurrentFilter {
 	}
 	
 	public void process() {
-		while(!isDone()) {
+		while(!input.isEmpty() && !isDone()) {
+//			if(input.isEmpty())
+//					System.out.println("Empty");
+//			if(isDone())
+//				System.out.println("done");
 			processLine(input.poll());
 		}
+//		if(isDone())
+//			System.out.println("DONER");
 	}
 	
 	public String processLine(String line) {
@@ -19,6 +25,7 @@ public class PrintFilter extends ConcurrentFilter {
 	@Override
 	public void run() {
 		process();
+		done=true;
 		
 	}
 }

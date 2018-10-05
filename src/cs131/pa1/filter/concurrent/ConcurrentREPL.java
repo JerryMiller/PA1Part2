@@ -12,6 +12,7 @@ public class ConcurrentREPL {
 		Scanner s = new Scanner(System.in);
 		System.out.print(Message.WELCOME);
 		String command;
+		Thread threader= null;
 		while(true) {
 			//obtaining the command from the user
 			System.out.print(Message.NEWCOMMAND);
@@ -22,9 +23,10 @@ public class ConcurrentREPL {
 				//building the filters list from the command
 				ConcurrentFilter filterlist = ConcurrentCommandBuilder.createFiltersFromCommand(command);
 				while(filterlist != null) {
-					Thread threader = new Thread (filterlist);
+					threader = new Thread (filterlist);
 					if(filterlist.getNext()==(null)) {
 						try {
+							threader.start();
 							threader.join();
 							filterlist = (ConcurrentFilter) filterlist.getNext();
 						} catch (InterruptedException e) {

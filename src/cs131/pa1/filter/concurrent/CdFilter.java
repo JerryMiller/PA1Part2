@@ -35,6 +35,7 @@ public class CdFilter extends ConcurrentFilter {
 	
 	public void process() {
 			processLine("");
+			
 	}
 	
 	public String processLine(String line) {
@@ -45,6 +46,7 @@ public class CdFilter extends ConcurrentFilter {
 	@Override
 	public void run() {
 		process();
+		done=true;
 		
 	}
 }

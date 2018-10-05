@@ -15,6 +15,7 @@ public class WcFilter extends ConcurrentFilter {
 		} else {
 			super.process();
 		}
+		
 	}
 	
 	public String processLine(String line) {
@@ -41,7 +42,10 @@ public class WcFilter extends ConcurrentFilter {
 
 	@Override
 	public void run() {
+		System.out.println("IN WC");
 		process();
+		System.out.println("out of WC");
+		done=true;
 		
 	}
 }
