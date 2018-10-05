@@ -8,7 +8,9 @@ public class PrintFilter extends ConcurrentFilter {
 	}
 	
 	public void process() {
-		while(!input.isEmpty()) {
+		String done ="";
+//		while(!input.isEmpty()) {
+		while(!done.equals("XXXYYYZZZPOISINPILL")) {
 			try {
 				done = input.take();
 			} catch (InterruptedException e) {
@@ -19,7 +21,9 @@ public class PrintFilter extends ConcurrentFilter {
 //					System.out.println("Empty");
 //			if(isDone())
 //				System.out.println("done");
-			if(isDone()) {
+			
+			if(done.equals("XXXYYYZZZPOISINPILL")) {
+//			if(isDone()) {
 				break;
 			}
 				

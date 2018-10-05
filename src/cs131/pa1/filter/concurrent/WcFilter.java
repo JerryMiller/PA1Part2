@@ -16,10 +16,34 @@ public class WcFilter extends ConcurrentFilter {
 		if(isDone()) {
 			output.add(processLine(null));
 		} else {
-			super.process();
-			output.add(linecount + " " + wordcount + " " + charcount);
+//			super.process();
+			nextprocess();
+			String line = linecount + " " + wordcount + " " + charcount;
+			output.add(line);
+
 		}
 		
+	}
+	public void nextprocess(){
+		String done="";
+//		while (!isDone()){
+		while(!done.equals("XXXYYYZZZPOISINPILL") ){
+			System.out.println("In the loop");
+			try {
+				done = input.take();
+				System.out.println("In the 2nd loop");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//			if(!isDone()) {
+			
+			String processedLine = processLine(done);
+			if (processedLine != null){
+				System.out.println("In the 3rd if loop");
+				output.add(processedLine);
+			}
+		}
 	}
 	
 	public String processLine(String line) {
@@ -28,7 +52,7 @@ public class WcFilter extends ConcurrentFilter {
 			return linecount + " " + wordcount + " " + charcount;
 		}
 		
-		if(isDone()) {
+		if(line.equals("XXXYYYZZZPOISINPILL")) {
 			String[] wct = line.split(" ");
 			wordcount += wct.length;
 			String[] cct = line.split("|");

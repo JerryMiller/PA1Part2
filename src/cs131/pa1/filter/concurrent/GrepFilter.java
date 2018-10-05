@@ -27,9 +27,10 @@ public class GrepFilter extends ConcurrentFilter {
 	}
 	
 	public void process(){
-		done = input.poll();
+		String done = "";
 		System.out.println("in process");
-		while (!isDone()){
+//		while (!isDone()){
+		while(!done.equals("XXXYYYZZZPOISINPILL")) {
 			System.out.println("In the loop");
 			try {
 				done = input.take();
@@ -38,7 +39,8 @@ public class GrepFilter extends ConcurrentFilter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(isDone()) {
+//			if(isDone()) {
+			if(done.equals("XXXYYYZZZPOISINPILL")) {
 				break;
 			}
 			
@@ -53,7 +55,6 @@ public class GrepFilter extends ConcurrentFilter {
 	@Override
 	public void run() {
 		process();
-		done=input.poll();
 		if(output==null)
 			output=new LinkedBlockingQueue<String>();
 		output.add("XXXYYYZZZPOISINPILL");

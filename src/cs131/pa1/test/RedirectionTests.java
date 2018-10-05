@@ -33,7 +33,7 @@ public class RedirectionTests {
 	
 	@Test
 	public void testComplexRedirection(){
-		testInput("cat fizz-buzz-10000.txt | grep F | wc > trial-file.txt\nexit");
+		testInput("cat fizz-buzz-10.txt | grep F | wc > trial-file.txt\nexit");
 		ConcurrentREPL.main(null);
 		assertFileContentsEquals("trial-file.txt", "3334 3334 16004\n");
 		assertOutput(Message.NEWCOMMAND.toString());

@@ -32,7 +32,9 @@ public class RedirectFilter extends ConcurrentFilter {
 	}
 	
 	public void process() {
-		while(!isDone() && !input.isEmpty()) {
+		String done = "";
+//		while(!isDone() && !input.isEmpty()) {
+		while(!done.equals("XXXYYYZZZPOISINPILL")) {
 			try {
 				done =input.take();
 			} catch (InterruptedException e) {
