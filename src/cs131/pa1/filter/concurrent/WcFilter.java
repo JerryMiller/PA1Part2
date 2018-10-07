@@ -18,8 +18,8 @@ public class WcFilter extends ConcurrentFilter {
 		} else {
 //			super.process();
 			nextprocess();
-			String line = linecount + " " + wordcount + " " + charcount;
-			output.add(line);
+//			String line = linecount + " " + wordcount + " " + charcount;
+//			output.add(line);
 
 		}
 		
@@ -28,10 +28,10 @@ public class WcFilter extends ConcurrentFilter {
 		String done="";
 //		while (!isDone()){
 		while(!done.equals("XXXYYYZZZPOISINPILL") ){
-			System.out.println("In the loop");
+			
 			try {
 				done = input.take();
-				System.out.println("In the 2nd loop");
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -40,7 +40,7 @@ public class WcFilter extends ConcurrentFilter {
 			
 			String processedLine = processLine(done);
 			if (processedLine != null){
-				System.out.println("In the 3rd if loop");
+			
 				output.add(processedLine);
 			}
 		}
@@ -53,11 +53,11 @@ public class WcFilter extends ConcurrentFilter {
 		}
 		
 		if(line.equals("XXXYYYZZZPOISINPILL")) {
-			String[] wct = line.split(" ");
-			wordcount += wct.length;
-			String[] cct = line.split("|");
-			charcount += cct.length;
-			return ++linecount + " " + wordcount + " " + charcount;
+//			String[] wct = line.split(" ");
+//			wordcount += wct.length;
+//			String[] cct = line.split("|");
+//			charcount += cct.length;
+			return linecount + " " + wordcount + " " + charcount;
 		} else {
 			linecount++;
 			String[] wct = line.split(" ");
@@ -70,9 +70,7 @@ public class WcFilter extends ConcurrentFilter {
 
 	@Override
 	public void run() {
-		System.out.println("IN WC");
 		process();
-		System.out.println("out of WC");
 		if(output==null)
 			output=new LinkedBlockingQueue<String>();
 		output.add("XXXYYYZZZPOISINPILL");

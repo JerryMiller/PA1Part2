@@ -28,13 +28,13 @@ public class GrepFilter extends ConcurrentFilter {
 	
 	public void process(){
 		String done = "";
-		System.out.println("in process");
+//		System.out.println("in process");
 //		while (!isDone()){
 		while(!done.equals("XXXYYYZZZPOISINPILL")) {
-			System.out.println("In the loop");
+//			System.out.println("In the loop");
 			try {
 				done = input.take();
-				System.out.println("In the 2nd loop");
+//				System.out.println("In the 2nd loop");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -46,7 +46,7 @@ public class GrepFilter extends ConcurrentFilter {
 			
 			String processedLine = processLine(done);
 			if (processedLine != null){
-				System.out.println("In the 3rd if loop");
+//				System.out.println("In the 3rd if loop");
 				output.add(processedLine);
 			}
 		}

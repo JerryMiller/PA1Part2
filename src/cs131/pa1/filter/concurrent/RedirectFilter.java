@@ -47,10 +47,11 @@ public class RedirectFilter extends ConcurrentFilter {
 	
 	public String processLine(String line) {
 		try {
-			fw.append(line + "\n");
-			if(isDone()) {
+			if(line.equals("XXXYYYZZZPOISINPILL")) {
 				fw.flush();
 				fw.close();
+			} else {
+				fw.append(line + "\n");
 			}
 		} catch (IOException e) {
 			System.out.printf(Message.FILE_NOT_FOUND.toString(), line);
@@ -60,7 +61,7 @@ public class RedirectFilter extends ConcurrentFilter {
 
 	@Override
 	public void run() {
-		System.out.println("red");
+//		System.out.println("red");
 		process();
 		if(output==null)
 			output=new LinkedBlockingQueue<String>();
