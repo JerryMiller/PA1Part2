@@ -30,7 +30,7 @@ public class GrepFilter extends ConcurrentFilter {
 		String done = "";
 //		System.out.println("in process");
 //		while (!isDone()){
-		while(!done.equals("XXXYYYZZZPOISINPILL")) {
+		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone()) {
 //			System.out.println("In the loop");
 			try {
 				done = input.take();

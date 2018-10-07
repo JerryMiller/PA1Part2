@@ -10,7 +10,7 @@ public class PrintFilter extends ConcurrentFilter {
 	public void process() {
 		String done ="";
 //		while(!input.isEmpty()) {
-		while(!done.equals("XXXYYYZZZPOISINPILL")) {
+		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone()) {
 			try {
 				done = input.take();
 			} catch (InterruptedException e) {

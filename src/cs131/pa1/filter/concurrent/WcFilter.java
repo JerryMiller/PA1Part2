@@ -27,7 +27,7 @@ public class WcFilter extends ConcurrentFilter {
 	public void nextprocess(){
 		String done="";
 //		while (!isDone()){
-		while(!done.equals("XXXYYYZZZPOISINPILL") ){
+		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone() ){
 			
 			try {
 				done = input.take();
