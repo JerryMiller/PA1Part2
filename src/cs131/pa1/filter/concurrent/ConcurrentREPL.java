@@ -44,12 +44,8 @@ public class ConcurrentREPL {
 						}
 					}
 				}
-					
-//					for(Integer i : listCommands.keySet()) {
-//						if(listFilters.get(i).getClassThread().isAlive()) {
-//							System.out.println("\t" + i + ". " + listCommands.get(i));
-//						}
-//					}
+			//For the kill case, this would sometimes fail on my partners mac, but always passed
+			//on my PC.
 			}else if (command.contains("kill") && Arrays.asList(command.split(" ")).contains("kill")){
 				String[] killArray = command.split(" ");
 				if(!command.substring(0,4).equals("kill")) {
@@ -71,19 +67,7 @@ public class ConcurrentREPL {
 						while(!threadArray.get(kill-1).isEmpty()) {
 							Thread th = threadArray.get(kill-1).pop();
 							th.interrupt();
-							
-							boolean tru = th.isInterrupted();
-							boolean alive = th.isAlive();
-//							System.out.println("hi");
-						}
-						
-//						ConcurrentFilter filter = listFilters.get(kill);
-//						while(filter!=null) {
-//							filter.getClassThread().interrupt();
-//							filter = (ConcurrentFilter) filter.getNext();
-//						}
-						
-						
+						}		
 						listFilters.remove(kill);
 						listCommands.remove(kill);
 						threadsList.remove(kill);
@@ -108,7 +92,6 @@ public class ConcurrentREPL {
 				}
 				Integer threadArrayCounter2 = 0;
 				while(filterlist != null) {
-					//(threadArrayCounter)==
 					threader = new Thread (filterlist);
 					threader.start();
 					if(threadArrayCounter2==0) {
@@ -116,7 +99,7 @@ public class ConcurrentREPL {
 						threadArrayCounter2++;
 					}
 					threadArray.get(threadArrayCounter).push(threader);
-//					
+					
 					if(threadCount.equals(1) && threadCount!=null) {
 						threadsList.put(threadCounter, threader);
 						threadCounter++;

@@ -10,7 +10,6 @@ public abstract class ConcurrentFilter extends Filter implements Runnable {
 	
 	protected LinkedBlockingQueue<String> input;
 	protected LinkedBlockingQueue<String> output;
-//	public String done="";
 	
 	@Override
 	public void setPrevFilter(Filter prevFilter) {
@@ -39,24 +38,19 @@ public abstract class ConcurrentFilter extends Filter implements Runnable {
 	public void process(){
 	
 		String done="";
-//		while (!isDone()){
 		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone()){
-//			System.out.println("In the loop");
 			try {
 				done = input.take();
-//				System.out.println("In the 2nd loop");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			if(!isDone()) {
 			if(done.equals("XXXYYYZZZPOISINPILL")) {
 				break;
 			}
 			
 			String processedLine = processLine(done);
 			if (processedLine != null){
-//				System.out.println("In the 3rd if loop");
 				output.add(processedLine);
 			}
 		}
@@ -64,6 +58,7 @@ public abstract class ConcurrentFilter extends Filter implements Runnable {
 	
 	
 	@Override
+	//checks if the current thread has been interrupted.  Sometimes, the thread can still run after being interrupted
 	public boolean isDone() {
 		if(getClassThread().isInterrupted()) {
 			return true;
@@ -77,6 +72,8 @@ public abstract class ConcurrentFilter extends Filter implements Runnable {
 			output=new LinkedBlockingQueue<String>();
 		output.add("XXXYYYZZZPOISINPILL");
 	}
+	
+	//gets the current running thread for that object
 	public Thread getClassThread() {
 		return Thread.currentThread();
 	}

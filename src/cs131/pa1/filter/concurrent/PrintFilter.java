@@ -9,7 +9,7 @@ public class PrintFilter extends ConcurrentFilter {
 	
 	public void process() {
 		String done ="";
-//		while(!input.isEmpty()) {
+		//check for the poisinPill and if the thread is interrupted but still running (which can happen)
 		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone()) {
 			try {
 				done = input.take();
@@ -17,20 +17,13 @@ public class PrintFilter extends ConcurrentFilter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			if(input.isEmpty())
-//					System.out.println("Empty");
-//			if(isDone())
-//				System.out.println("done");
 			
 			if(done.equals("XXXYYYZZZPOISINPILL")) {
-//			if(isDone()) {
 				break;
 			}
 				
 			processLine(done);
 		}
-//		if(isDone())
-//			System.out.println("DONER");
 	}
 	
 	public String processLine(String line) {

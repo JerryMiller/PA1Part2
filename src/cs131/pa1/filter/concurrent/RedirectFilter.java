@@ -34,7 +34,7 @@ public class RedirectFilter extends ConcurrentFilter {
 	
 	public void process() {
 		String done = "";
-//		while(!isDone() && !input.isEmpty()) {
+		//check for the poisinPill and if the thread is interrupted but still running (which can happen)
 		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone()) {
 			try {
 				done =input.take();

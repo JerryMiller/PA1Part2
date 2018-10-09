@@ -16,17 +16,14 @@ public class WcFilter extends ConcurrentFilter {
 		if(isDone()) {
 			output.add(processLine(null));
 		} else {
-//			super.process();
 			nextprocess();
-//			String line = linecount + " " + wordcount + " " + charcount;
-//			output.add(line);
 
 		}
 		
 	}
 	public void nextprocess(){
 		String done="";
-//		while (!isDone()){
+		//check for the poisinPill and if the thread is interrupted but still running (which can happen)
 		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone() ){
 			
 			try {
@@ -36,7 +33,6 @@ public class WcFilter extends ConcurrentFilter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			if(!isDone()) {
 			
 			String processedLine = processLine(done);
 			if (processedLine != null){
@@ -53,10 +49,6 @@ public class WcFilter extends ConcurrentFilter {
 		}
 		
 		if(line.equals("XXXYYYZZZPOISINPILL")) {
-//			String[] wct = line.split(" ");
-//			wordcount += wct.length;
-//			String[] cct = line.split("|");
-//			charcount += cct.length;
 			return linecount + " " + wordcount + " " + charcount;
 		} else {
 			linecount++;

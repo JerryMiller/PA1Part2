@@ -28,25 +28,20 @@ public class GrepFilter extends ConcurrentFilter {
 	
 	public void process(){
 		String done = "";
-//		System.out.println("in process");
-//		while (!isDone()){
+		//check for the poisinPill and if the thread is interrupted but still running (which can happen)
 		while(!done.equals("XXXYYYZZZPOISINPILL") && !isDone()) {
-//			System.out.println("In the loop");
 			try {
 				done = input.take();
-//				System.out.println("In the 2nd loop");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			if(isDone()) {
 			if(done.equals("XXXYYYZZZPOISINPILL")) {
 				break;
 			}
 			
 			String processedLine = processLine(done);
 			if (processedLine != null){
-//				System.out.println("In the 3rd if loop");
 				output.add(processedLine);
 			}
 		}
