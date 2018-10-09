@@ -3,6 +3,7 @@ package cs131.pa1.filter.concurrent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import cs131.pa1.filter.Filter;
@@ -10,7 +11,6 @@ import cs131.pa1.filter.Message;
 
 public class RedirectFilter extends ConcurrentFilter {
 	private FileWriter fw;
-	
 	public RedirectFilter(String line) throws Exception {
 		super();
 		String[] param = line.split(">");
@@ -20,7 +20,8 @@ public class RedirectFilter extends ConcurrentFilter {
 				throw new Exception();
 			}
 			try {
-				fw = new FileWriter(new File(ConcurrentREPL.currentWorkingDirectory + Filter.FILE_SEPARATOR + param[1].trim()));
+				fw = new FileWriter(new File( ConcurrentREPL.currentWorkingDirectory + Filter.FILE_SEPARATOR + param[1].trim()));
+				
 			} catch (IOException e) {
 				System.out.printf(Message.FILE_NOT_FOUND.toString(), line);	//shouldn't really happen but just in case
 				throw new Exception();
@@ -43,6 +44,8 @@ public class RedirectFilter extends ConcurrentFilter {
 			}
 			processLine(done);
 		}
+		
+		
 	}
 	
 	public String processLine(String line) {

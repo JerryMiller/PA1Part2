@@ -2,9 +2,11 @@ package cs131.pa1.filter.concurrent;
 
 import cs131.pa1.filter.Message;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class ConcurrentREPL {
 
@@ -19,8 +21,10 @@ public class ConcurrentREPL {
 		HashMap<Integer, ConcurrentFilter> listFilters = new HashMap<>();
 		HashMap<Integer, String> listCommands = new HashMap<>();
 		HashMap<Integer, Thread> threadsList = new HashMap<>();
+		HashMap<Integer, Stack<Thread>> threadArray = new  HashMap<>();
 		int count = 1;
 		Integer threadCounter=1;
+		Integer threadArrayCounter = 0;
 		while(true) {
 			//obtaining the command from the user
 			System.out.print(Message.NEWCOMMAND);
@@ -35,7 +39,7 @@ public class ConcurrentREPL {
 					System.out.println(Message.CANNOT_HAVE_INPUT.with_parameter(command));
 				}else if(command.equals("repl_jobs")) {
 					for(Integer I : threadsList.keySet()) {
-						if(threadsList.get(I).isAlive()) {
+						if(threadsList.get(I).isAlive() && threadsList.get(I)!=null && listCommands.get(I)!=null) {
 							System.out.println("\t" + I + ". " + listCommands.get(I));
 						}
 					}
@@ -63,18 +67,32 @@ public class ConcurrentREPL {
 						System.out.print(Message.INVALID_PARAMETER.with_parameter(command));
 					}else {
 						Integer kill = Integer.parseInt(command.substring(command.length()-1, command.length()));
-						ConcurrentFilter filter = listFilters.get(kill);
-						while(filter!=null) {
-							filter.getClassThread().interrupt();
-							filter = (ConcurrentFilter) filter.getNext();
+						
+						while(!threadArray.get(kill-1).isEmpty()) {
+							Thread th = threadArray.get(kill-1).pop();
+							th.interrupt();
+							
+							boolean tru = th.isInterrupted();
+							boolean alive = th.isAlive();
+//							System.out.println("hi");
 						}
+						
+//						ConcurrentFilter filter = listFilters.get(kill);
+//						while(filter!=null) {
+//							filter.getClassThread().interrupt();
+//							filter = (ConcurrentFilter) filter.getNext();
+//						}
+						
+						
 						listFilters.remove(kill);
 						listCommands.remove(kill);
+						threadsList.remove(kill);
 					}
 
 				}
 			}else if(!command.equals("")) {
 				//building the filters list from the command
+				
 				String fullCommand = command;
 				boolean hasAmp = false;
 				if(command.charAt(command.length()-1) == '&'){
@@ -88,10 +106,18 @@ public class ConcurrentREPL {
 					listCommands.put(count, command);
 					count++;
 				}
+				Integer threadArrayCounter2 = 0;
 				while(filterlist != null) {
+					//(threadArrayCounter)==
 					threader = new Thread (filterlist);
 					threader.start();
-					if(threadCount.equals(1)) {
+					if(threadArrayCounter2==0) {
+						threadArray.put(threadArrayCounter, new Stack<Thread>());
+						threadArrayCounter2++;
+					}
+					threadArray.get(threadArrayCounter).push(threader);
+//					
+					if(threadCount.equals(1) && threadCount!=null) {
 						threadsList.put(threadCounter, threader);
 						threadCounter++;
 						threadCount++;
@@ -106,6 +132,7 @@ public class ConcurrentREPL {
 					}
 					filterlist = (ConcurrentFilter) filterlist.getNext();
 				}
+				threadArrayCounter++;
 			}
 		}
 		s.close();

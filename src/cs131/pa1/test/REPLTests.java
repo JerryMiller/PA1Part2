@@ -297,6 +297,7 @@ public class REPLTests {
 				isr.close();
 				if(cnt>0)
 					assertTrue(false);
+				
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				assertTrue(false);
